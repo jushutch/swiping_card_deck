@@ -37,7 +37,8 @@ class SwipingGestureDetector extends StatefulWidget {
   State<StatefulWidget> createState() => _SwipingGestureDetector();
 }
 
-class _SwipingGestureDetector extends State<SwipingGestureDetector> with TickerProviderStateMixin {
+class _SwipingGestureDetector extends State<SwipingGestureDetector>
+    with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
@@ -54,7 +55,10 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector> with TickerP
     );
     widget.swipeController.addListener(() {
       setState(() {
-        widget.dragAlignment = Alignment(widget.swipe.value, widget.dragAlignment.y);
+        widget.dragAlignment = Alignment(
+          widget.swipe.value,
+          widget.dragAlignment.y
+        );
       });
     });
   }
@@ -72,17 +76,16 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector> with TickerP
     return GestureDetector(
       onPanUpdate: (DragUpdateDetails details) {
         setState(() {
-          widget.dragAlignment += Alignment(
-            details.delta.dx, 
-            details.delta.dy
-          );
+          widget.dragAlignment += Alignment(details.delta.dx, details.delta.dy);
         });
       },
       onPanEnd: (DragEndDetails details) async {
         double vx = details.velocity.pixelsPerSecond.dx;
-        if (vx > widget.minimumVelocity || widget.dragAlignment.x > widget.swipeThreshold) {
+        if (vx > widget.minimumVelocity ||
+            widget.dragAlignment.x > widget.swipeThreshold) {
           await widget.swipeRight(MediaQuery.of(context).size);
-        } else if (vx < -widget.minimumVelocity ||  widget.dragAlignment.x < -widget.swipeThreshold) {
+        } else if (vx < -widget.minimumVelocity ||
+            widget.dragAlignment.x < -widget.swipeThreshold) {
           await widget.swipeLeft(MediaQuery.of(context).size);
         } else {
           animateBackToDeck(details.velocity.pixelsPerSecond, screenSize);
@@ -100,22 +103,27 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector> with TickerP
 
   List<Widget> topTwoCards() {
     if (widget.cardDeck.isEmpty) {
-      return [const SizedBox(height: 0, width: 0,)];
+      return [
+        const SizedBox(
+          height: 0,
+          width: 0,
+        )
+      ];
     }
     List<Widget> cardDeck = [];
-    for (int i = max(widget.cardDeck.length - 2, 0); i < widget.cardDeck.length; ++i) {
+    int deckLength = widget.cardDeck.length;
+    for (int i = max(deckLength - 2, 0); i < deckLength; ++i) {
       cardDeck.add(widget.cardDeck[i]);
     }
     Widget topCard = cardDeck.last;
     cardDeck.removeLast();
     cardDeck.add(
       Align(
-        alignment: Alignment(getCardXPosition(), 0),
-        child: Transform.rotate(
-          angle: getCardAngle(),
-          child: topCard,
-        )
-      ),
+          alignment: Alignment(getCardXPosition(), 0),
+          child: Transform.rotate(
+            angle: getCardAngle(),
+            child: topCard,
+          )),
     );
     return cardDeck;
   }
@@ -130,7 +138,7 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector> with TickerP
     return widget.dragAlignment.x / ((screenWidth - widget.cardWidth) / 2);
   }
 
-  void animateBackToDeck(Offset pixelsPerSecond, Size size) async{
+  void animateBackToDeck(Offset pixelsPerSecond, Size size) async {
     widget.animation = widget.controller.drive(
       AlignmentTween(
         begin: widget.dragAlignment,
@@ -144,7 +152,7 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector> with TickerP
     final unitsPerSecondY = pixelsPerSecond.dy / size.height;
     final unitsPerSecond = Offset(unitsPerSecondX, unitsPerSecondY);
     final unitVelocity = unitsPerSecond.distance;
-    
+
     const spring = SpringDescription(
       mass: 30,
       stiffness: 1,
