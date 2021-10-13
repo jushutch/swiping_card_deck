@@ -19,8 +19,7 @@ class SwipingCardDeck extends StatelessWidget {
     this.minimumVelocity = 1000,
     this.rotationFactor = .8 / 3.14,
     this.swipeThreshold,
-  }) 
-  : super(key: key) {
+  }) : super(key: key) {
     cardDeck = cardDeck.reversed.toList();
   }
 
@@ -55,7 +54,6 @@ class SwipingCardDeck extends StatelessWidget {
   static const String LEFT = "left";
   static const String RIGHT = "right";
 
-
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
@@ -73,22 +71,22 @@ class SwipingCardDeck extends StatelessWidget {
     );
     return SizedBox(
       child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        SizedBox(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          SizedBox(
             width: MediaQuery.of(context).size.width,
             child: swipeDetector,
           ),
-      ],
-    ),
+        ],
+      ),
     );
   }
 
   /// Swipe the top [Card] to the left.
-  /// 
+  ///
   /// If there is no animation already in progress, trigger the animation
   /// to swipe the top [Card] to the left, call the function [onLeftSwipe],
-  /// and remove the [Card] from the deck. If the deck is empty, call the 
+  /// and remove the [Card] from the deck. If the deck is empty, call the
   /// function [onDeckEmpty].
   Future<void> swipeLeft(Size screenSize) async {
     if (animationActive || cardDeck.isEmpty) return;
@@ -99,10 +97,10 @@ class SwipingCardDeck extends StatelessWidget {
   }
 
   /// Swipe the top [Card] to the right.
-  /// 
+  ///
   /// If there is no animation already in progress, trigger the animation
   /// to swipe the top [Card] to the right, call the function [onRightSwipe],
-  /// and remove the [Card] from the deck. If the deck is empty, call the 
+  /// and remove the [Card] from the deck. If the deck is empty, call the
   /// function [onDeckEmpty].
   Future<void> swipeRight(Size screenSize) async {
     if (animationActive || cardDeck.isEmpty) return;
