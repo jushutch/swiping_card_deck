@@ -37,7 +37,6 @@ class SwipingGestureDetector extends StatefulWidget {
 
 class _SwipingGestureDetector extends State<SwipingGestureDetector>
     with TickerProviderStateMixin {
-  
   bool animationActive = false;
   late final AnimationController springController;
   late Animation<Alignment> spring;
@@ -53,9 +52,7 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
     });
 
     widget.swipeController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500)
-    );
+        vsync: this, duration: const Duration(milliseconds: 500));
     widget.swipeController.addListener(() {
       setState(() {
         widget.dragAlignment = widget.swipe.value;
@@ -79,12 +76,12 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
           widget.dragAlignment += Alignment(details.delta.dx, details.delta.dy);
         });
       },
-      onPanStart: (details) async {
+      onPanStart: (DragStartDetails details) async {
         if (animationActive) {
           springController.stop();
         }
       },
-      onPanEnd: (DragEndDetails details) async { 
+      onPanEnd: (DragEndDetails details) async {
         double vx = details.velocity.pixelsPerSecond.dx;
         if (vx > widget.minimumVelocity ||
             widget.dragAlignment.x > widget.swipeThreshold) {
