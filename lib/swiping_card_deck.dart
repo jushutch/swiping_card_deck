@@ -113,10 +113,8 @@ class SwipingCardDeck extends StatelessWidget {
     double swipeEnd = screenSize.width / 2 + cardWidth;
     swipeDetector.swipe = AlignmentTween(
       begin: swipeDetector.dragAlignment,
-      end: Alignment(
-        direction == LEFT ? -swipeEnd : swipeEnd,
-        swipeDetector.dragAlignment.x
-      ),
+      end: Alignment(direction == LEFT ? -swipeEnd : swipeEnd,
+          swipeDetector.dragAlignment.x),
     ).animate(
       CurvedAnimation(
         parent: swipeDetector.swipeController,
