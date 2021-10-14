@@ -1,6 +1,5 @@
 /// The swiping_card_deck library contains the [SwipingCardDeck] widget
 /// which allows a user to swipe through a deck of [Card] widgets.
-
 library swiping_card_deck;
 
 import 'package:flutter/material.dart';
@@ -112,9 +111,12 @@ class SwipingCardDeck extends StatelessWidget {
 
   Future<void> _swipeCard(String direction, Size screenSize) async {
     double swipeEnd = screenSize.width / 2 + cardWidth;
-    swipeDetector.swipe = Tween<double>(
-      begin: swipeDetector.dragAlignment.x,
-      end: direction == LEFT ? -swipeEnd : swipeEnd,
+    swipeDetector.swipe = AlignmentTween(
+      begin: swipeDetector.dragAlignment,
+      end: Alignment(
+        direction == LEFT ? -swipeEnd : swipeEnd,
+        swipeDetector.dragAlignment.x
+      ),
     ).animate(
       CurvedAnimation(
         parent: swipeDetector.swipeController,
