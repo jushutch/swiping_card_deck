@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
@@ -28,10 +27,9 @@ class SwipingGestureDetector extends StatefulWidget {
   final double cardWidth;
 
   Alignment dragAlignment = Alignment.center;
-  late final Animation<Alignment> animation;
-  late final AnimationController controller;
+
   late final AnimationController swipeController;
-  late final Animation<double> swipe;
+  late Animation<Alignment> swipe;
 
   @override
   State<StatefulWidget> createState() => _SwipingGestureDetector();
@@ -39,33 +37,35 @@ class SwipingGestureDetector extends StatefulWidget {
 
 class _SwipingGestureDetector extends State<SwipingGestureDetector>
     with TickerProviderStateMixin {
+  
+  bool animationActive = false;
+  late final AnimationController springController;
+  late Animation<Alignment> spring;
+
   @override
   void initState() {
     super.initState();
-    widget.controller = AnimationController(vsync: this);
-    widget.controller.addListener(() {
+    springController = AnimationController(vsync: this);
+    springController.addListener(() {
       setState(() {
-        widget.dragAlignment = widget.animation.value;
+        widget.dragAlignment = spring.value;
       });
     });
 
     widget.swipeController = AnimationController(
-      vsync: this, 
+      vsync: this,
       duration: const Duration(milliseconds: 500)
     );
     widget.swipeController.addListener(() {
       setState(() {
-        widget.dragAlignment = Alignment(
-          widget.swipe.value,
-          widget.dragAlignment.y
-        );
+        widget.dragAlignment = widget.swipe.value;
       });
     });
   }
 
   @override
   void dispose() {
-    widget.controller.dispose();
+    springController.dispose();
     widget.swipeController.dispose();
     super.dispose();
   }
@@ -79,7 +79,12 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
           widget.dragAlignment += Alignment(details.delta.dx, details.delta.dy);
         });
       },
-      onPanEnd: (DragEndDetails details) async {
+      onPanStart: (details) async {
+        if (animationActive) {
+          springController.stop();
+        }
+      },
+      onPanEnd: (DragEndDetails details) async { 
         double vx = details.velocity.pixelsPerSecond.dx;
         if (vx > widget.minimumVelocity ||
             widget.dragAlignment.x > widget.swipeThreshold) {
@@ -139,7 +144,7 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
   }
 
   void animateBackToDeck(Offset pixelsPerSecond, Size size) async {
-    widget.animation = widget.controller.drive(
+    spring = springController.drive(
       AlignmentTween(
         begin: widget.dragAlignment,
         end: Alignment.center,
@@ -153,14 +158,15 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
     final unitsPerSecond = Offset(unitsPerSecondX, unitsPerSecondY);
     final unitVelocity = unitsPerSecond.distance;
 
-    const spring = SpringDescription(
+    const springProps = SpringDescription(
       mass: 30,
       stiffness: 1,
       damping: 1,
     );
 
-    final simulation = SpringSimulation(spring, 0, 1, -unitVelocity);
-
-    await widget.controller.animateWith(simulation);
+    final simulation = SpringSimulation(springProps, 0, 1, -unitVelocity);
+    animationActive = true;
+    await springController.animateWith(simulation);
+    animationActive = false;
   }
 }
