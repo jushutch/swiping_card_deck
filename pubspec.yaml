@@ -1,7 +1,7 @@
 name: swiping_card_deck
-description: A new Flutter package project.
+description: A widget for swiping through a deck of cards with gestures or buttons.
 version: 0.0.1
-homepage:
+repository: https://github.com/jushutch/swiping_card_deck
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
