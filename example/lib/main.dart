@@ -3,16 +3,13 @@ import 'package:swiping_card_deck/swiping_card_deck.dart';
 import 'dart:math' as math;
 
 void main() {
-  runApp(
-    const MaterialApp(
-      home: Scaffold(
+  runApp(const MaterialApp(
+    home: Scaffold(
         body: Center(
-          child: ExamplePage(),
-        )
-      ),
-      title: 'SwipingCardDeck',
-    )
-  );
+      child: ExamplePage(),
+    )),
+    title: 'SwipingCardDeck',
+  ));
 }
 
 class ExamplePage extends StatelessWidget {
@@ -42,14 +39,18 @@ class ExamplePage extends StatelessWidget {
               icon: const Icon(Icons.clear),
               iconSize: 30,
               color: Colors.red,
-              onPressed: deck.animationActive ? null : () => deck.swipeLeft(MediaQuery.of(context).size),
+              onPressed: deck.animationActive
+                  ? null
+                  : () => deck.swipeLeft(MediaQuery.of(context).size),
             ),
             const SizedBox(width: 40),
             IconButton(
               icon: const Icon(Icons.check),
               iconSize: 30,
               color: Colors.green,
-              onPressed: deck.animationActive ? null : () => deck.swipeRight(MediaQuery.of(context).size),
+              onPressed: deck.animationActive
+                  ? null
+                  : () => deck.swipeRight(MediaQuery.of(context).size),
             ),
           ],
         ),
@@ -62,12 +63,11 @@ class ExamplePage extends StatelessWidget {
     for (int i = 0; i < 500; ++i) {
       cardDeck.add(
         Card(
-          color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
-          child: const SizedBox(height: 300, width: 200)
-        ),
+          color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+              .withOpacity(1.0),
+          child: const SizedBox(height: 300, width: 200)),
       );
     }
     return cardDeck;
   }
-  
 }
