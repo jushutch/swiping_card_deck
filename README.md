@@ -73,9 +73,14 @@ SwipingCardDeck(
 ```
 
 ## Additional information
-
+### Issues and suggestions
 This package is being actively maintained and developed. To submit ideas,
 issues, or suggestions, create an issue in the
-[GitHub repository](https://github.com/jushutch/swiping_card_deck). If you
-would like to contribute to the project, feel free to open pull requests to
-resolve open issues.
+[GitHub repository](https://github.com/jushutch/swiping_card_deck). 
+
+### Contributing
+Thank you for your interest in contributing! To get started, read through 
+the documentation in [CONTRIBUTING](https://github.com/jushutch/swiping_card_deck/blob/main/CONTRIBUTING.md).
+There are always new issues coming so be sure to check back often, and if there's
+something you want to work on but there's no issue, just open one yourself!
+
