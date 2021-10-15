@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
+//ignore: must_be_immutable
 class SwipingGestureDetector extends StatefulWidget {
   SwipingGestureDetector({
     Key? key,

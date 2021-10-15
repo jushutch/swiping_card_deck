@@ -7,6 +7,7 @@ import 'package:swiping_card_deck/swiping_gesture_detector.dart';
 
 /// A deck of [Card] widgets that can be swiped to the left or right
 /// using a gesture or a button.
+//ignore: must_be_immutable
 class SwipingCardDeck extends StatelessWidget {
   SwipingCardDeck({
     Key? key,
@@ -50,8 +51,8 @@ class SwipingCardDeck extends StatelessWidget {
   late final SwipingGestureDetector swipeDetector;
 
   bool animationActive = false;
-  static const String LEFT = "left";
-  static const String RIGHT = "right";
+  static const String left = "left";
+  static const String right = "right";
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +90,7 @@ class SwipingCardDeck extends StatelessWidget {
   /// function [onDeckEmpty].
   Future<void> swipeLeft(Size screenSize) async {
     if (animationActive || cardDeck.isEmpty) return;
-    await _swipeCard(LEFT, screenSize);
+    await _swipeCard(left, screenSize);
     onLeftSwipe(cardDeck.last);
     cardDeck.removeLast();
     if (cardDeck.isEmpty) onDeckEmpty();
@@ -103,7 +104,7 @@ class SwipingCardDeck extends StatelessWidget {
   /// function [onDeckEmpty].
   Future<void> swipeRight(Size screenSize) async {
     if (animationActive || cardDeck.isEmpty) return;
-    await _swipeCard(RIGHT, screenSize);
+    await _swipeCard(right, screenSize);
     onRightSwipe(cardDeck.last);
     cardDeck.removeLast();
     if (cardDeck.isEmpty) onDeckEmpty();
@@ -113,7 +114,7 @@ class SwipingCardDeck extends StatelessWidget {
     double swipeEnd = screenSize.width / 2 + cardWidth;
     swipeDetector.swipe = AlignmentTween(
       begin: swipeDetector.dragAlignment,
-      end: Alignment(direction == LEFT ? -swipeEnd : swipeEnd,
+      end: Alignment(direction == left ? -swipeEnd : swipeEnd,
           swipeDetector.dragAlignment.x),
     ).animate(
       CurvedAnimation(

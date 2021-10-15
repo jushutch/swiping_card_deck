@@ -1,0 +1,23 @@
+name: Flutter CI
+
+# This workflow is triggered on pull requests to the repository.
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+    # This job will run on ubuntu virtual machine
+    runs-on: ubuntu-latest
+    steps:
+    
+    # Setup the flutter environment.
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable' 
+
+    # Statically analyze the Dart code for any errors.
+    - name: Flutter Analyze
+      run: flutter analyze .
+    
