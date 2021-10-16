@@ -21,7 +21,7 @@ complicated, and down right bad. This package aims to be an easy-to-use and
 customizable way to implement that functionality, and will hopefully save you
 a great amount of time!
 
-![SwipingCardDeck Demonstration](https://github.com/jushutch/swiping_card_deck/raw/de09811abff593784df72d9c7c1be00f5f60f2db/gif/swiping_card_deck.gif)
+![SwipingCardDeck Demonstration](./gif/swiping_card_deck.gif)
 
 ## Features
 
