@@ -21,3 +21,6 @@ jobs:
     - name: Flutter Analyze
       run: flutter analyze .
     
+    # Run tests for flutter project
+    - name: Flutter Test
+      run: flutter test
