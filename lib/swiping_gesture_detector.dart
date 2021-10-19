@@ -64,7 +64,6 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
   @override
   void dispose() {
     springController.dispose();
-    widget.swipeController.dispose();
     super.dispose();
   }
 
