@@ -3,7 +3,7 @@
 library swiping_card_deck;
 
 import 'package:flutter/material.dart';
-import 'package:swiping_card_deck/swiping_gesture_detector.dart';
+import './src/swiping_gesture_detector.dart';
 
 /// A deck of [Card] widgets that can be swiped to the left or right
 /// using a gesture or a button.

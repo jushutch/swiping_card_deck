@@ -1,6 +1,6 @@
 name: swiping_card_deck
 description: A widget for swiping through a deck of cards with gestures or buttons.
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/jushutch/swiping_card_deck
 
 environment:
