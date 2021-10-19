@@ -11,6 +11,8 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
+# swiping_card_deck
+
 A widget for swiping through a deck of cards with gestures or buttons.
 
 This package was inspired when I was trying to develop a Tinder-like app
@@ -21,7 +23,7 @@ complicated, and down right bad. This package aims to be an easy-to-use and
 customizable way to implement that functionality, and will hopefully save you
 a great amount of time!
 
-![SwipingCardDeck Demonstration](./gif/swiping_card_deck.gif)
+![SwipingCardDeck Demonstration](https://github.com/jushutch/swiping_card_deck/raw/main/gif/swiping_card_deck.gif)
 
 ## Features
 

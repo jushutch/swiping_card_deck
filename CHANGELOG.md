@@ -1,3 +1,7 @@
+## 0.0.3
+
+- Fix GIF issue in README
+
 ## 0.0.2
 
 - Update README
