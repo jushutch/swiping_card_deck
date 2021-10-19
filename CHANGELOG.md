@@ -1,4 +1,4 @@
-## 0.0.1
+## 0.0.2
 
 - Update README
 - Add unit tests
