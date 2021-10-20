@@ -41,7 +41,7 @@ class ExamplePage extends StatelessWidget {
               color: Colors.red,
               onPressed: deck.animationActive
                   ? null
-                  : () => deck.swipeLeft(MediaQuery.of(context).size),
+                  : () => deck.swipeLeft(),
             ),
             const SizedBox(width: 40),
             IconButton(
@@ -50,7 +50,7 @@ class ExamplePage extends StatelessWidget {
               color: Colors.green,
               onPressed: deck.animationActive
                   ? null
-                  : () => deck.swipeRight(MediaQuery.of(context).size),
+                  : () => deck.swipeRight(),
             ),
           ],
         ),
