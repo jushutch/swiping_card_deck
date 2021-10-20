@@ -50,13 +50,16 @@ class SwipingCardDeck extends StatelessWidget {
   /// The [SwipingGestureDetector] used to control swipe animations.
   late final SwipingGestureDetector swipeDetector;
 
+  /// The [Size] of the screen
+  late final Size screenSize;
+
   bool animationActive = false;
   static const String left = "left";
   static const String right = "right";
 
   @override
   Widget build(BuildContext context) {
-    final Size screenSize = MediaQuery.of(context).size;
+    screenSize = MediaQuery.of(context).size;
     swipeDetector = SwipingGestureDetector(
       onDeckEmpty: onDeckEmpty,
       onLeftSwipe: onLeftSwipe,
@@ -88,7 +91,7 @@ class SwipingCardDeck extends StatelessWidget {
   /// to swipe the top [Card] to the left, call the function [onLeftSwipe],
   /// and remove the [Card] from the deck. If the deck is empty, call the
   /// function [onDeckEmpty].
-  Future<void> swipeLeft(Size screenSize) async {
+  Future<void> swipeLeft() async {
     if (animationActive || cardDeck.isEmpty) return;
     await _swipeCard(left, screenSize);
     onLeftSwipe(cardDeck.last);
@@ -102,7 +105,7 @@ class SwipingCardDeck extends StatelessWidget {
   /// to swipe the top [Card] to the right, call the function [onRightSwipe],
   /// and remove the [Card] from the deck. If the deck is empty, call the
   /// function [onDeckEmpty].
-  Future<void> swipeRight(Size screenSize) async {
+  Future<void> swipeRight() async {
     if (animationActive || cardDeck.isEmpty) return;
     await _swipeCard(right, screenSize);
     onRightSwipe(cardDeck.last);

@@ -20,7 +20,7 @@ class SwipingGestureDetector extends StatefulWidget {
 
   final List<Card> cardDeck;
   final Function(Card) onLeftSwipe, onRightSwipe;
-  final Function(Size) swipeLeft, swipeRight;
+  final Function() swipeLeft, swipeRight;
   final Function() onDeckEmpty;
   final double minimumVelocity;
   final double rotationFactor;
@@ -85,10 +85,10 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
         double vx = details.velocity.pixelsPerSecond.dx;
         if (vx > widget.minimumVelocity ||
             widget.dragAlignment.x > widget.swipeThreshold) {
-          await widget.swipeRight(MediaQuery.of(context).size);
+          await widget.swipeRight();
         } else if (vx < -widget.minimumVelocity ||
             widget.dragAlignment.x < -widget.swipeThreshold) {
-          await widget.swipeLeft(MediaQuery.of(context).size);
+          await widget.swipeLeft();
         } else {
           animateBackToDeck(details.velocity.pixelsPerSecond, screenSize);
         }
