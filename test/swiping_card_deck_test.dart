@@ -54,7 +54,7 @@ void main() {
     expect(deckFinder, findsOneWidget);
 
     SwipingCardDeck deck = tester.widget(deckFinder);
-    expectLater(() => deck.swipeLeft(const Size(200, 300)), prints("Swiped left!\n"));
+    expectLater(() => deck.swipeLeft(), prints("Swiped left!\n"));
     await tester.pumpAndSettle();
     expect(cardFinder, findsNWidgets(2));
     expect(tester.widget(cardFinder.first) as Card, cardDeck[2]);
@@ -71,7 +71,7 @@ void main() {
     expect(tester.widget(cardFinder.first) as Card, cardDeck[1]);
     expect(tester.widget(cardFinder.last) as Card, cardDeck[0]);
 
-    expectLater(() => deck.swipeRight(const Size(200, 300)), prints("Swiped right!\n"));
+    expectLater(() => deck.swipeRight(), prints("Swiped right!\n"));
     await tester.pumpAndSettle();
     expect(cardFinder, findsNWidgets(2));
     expect(tester.widget(cardFinder.first) as Card, cardDeck[2]);
@@ -85,7 +85,7 @@ void main() {
     SwipingCardDeck deck = tester.widget(deckFinder);
 
     for (int i = 0; i < numCards - 1; ++i) {
-      deck.swipeLeft(const Size(200, 300));
+      deck.swipeLeft();
       await tester.pumpAndSettle();
     }
 
@@ -93,7 +93,7 @@ void main() {
     expect(cardFinder, findsOneWidget);
     expect(tester.widget(cardFinder.first) as Card, cardDeck[numCards - 1]);
 
-    expectLater(() => deck.swipeLeft(const Size(200, 300)), prints("Swiped left!\nCard deck empty\n"));
+    expectLater(() => deck.swipeLeft(), prints("Swiped left!\nCard deck empty\n"));
     await tester.pumpAndSettle();
 
     expect(cardFinder, findsNothing);
