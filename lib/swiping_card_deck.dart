@@ -50,7 +50,7 @@ class SwipingCardDeck extends StatelessWidget {
   /// The [SwipingGestureDetector] used to control swipe animations.
   late final SwipingGestureDetector swipeDetector;
 
-  /// The [Size] of the screen
+  /// The [Size] of the screen.
   late final Size screenSize;
 
   bool animationActive = false;
