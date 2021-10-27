@@ -1,0 +1,37 @@
+name: Generate badges
+
+# Trigger worflow on pushes to main branch
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  run:
+    name: Run Tests With Coverage
+    runs-on: ubuntu-latest
+    steps:
+    # Init actions
+    - name: Start Workflow
+      uses: actions/checkout@v2
+
+    # Setup the flutter environment.
+    - name: Install Flutter
+      uses: subosito/flutter-action@v1
+      with:
+        channel: "stable"
+
+    # Restore packages
+    - name: Restore packages
+      run: flutter pub get
+
+    # Run tests for flutter project
+    - name: Run Flutter Tests
+      run: flutter test --coverage
+
+    # Upload coverage
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v2
+      with:
+        fail_ci_if_error: true
+        files: ./coverage/lcov.info
