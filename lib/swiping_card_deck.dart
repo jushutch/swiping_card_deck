@@ -61,9 +61,6 @@ class SwipingCardDeck extends StatelessWidget {
   Widget build(BuildContext context) {
     screenSize = MediaQuery.of(context).size;
     swipeDetector = SwipingGestureDetector(
-      onDeckEmpty: onDeckEmpty,
-      onLeftSwipe: onLeftSwipe,
-      onRightSwipe: onRightSwipe,
       cardDeck: cardDeck,
       swipeLeft: swipeLeft,
       swipeRight: swipeRight,
