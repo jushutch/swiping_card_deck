@@ -7,9 +7,6 @@ class SwipingGestureDetector extends StatefulWidget {
   SwipingGestureDetector({
     Key? key,
     required this.cardDeck,
-    required this.onLeftSwipe,
-    required this.onRightSwipe,
-    required this.onDeckEmpty,
     required this.swipeLeft,
     required this.swipeRight,
     required this.cardWidth,
@@ -19,9 +16,7 @@ class SwipingGestureDetector extends StatefulWidget {
   }) : super(key: key);
 
   final List<Card> cardDeck;
-  final Function(Card) onLeftSwipe, onRightSwipe;
   final Function() swipeLeft, swipeRight;
-  final Function() onDeckEmpty;
   final double minimumVelocity;
   final double rotationFactor;
   final double swipeThreshold;
@@ -83,11 +78,11 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
       },
       onPanEnd: (DragEndDetails details) async {
         double vx = details.velocity.pixelsPerSecond.dx;
-        if (vx > widget.minimumVelocity ||
-            widget.dragAlignment.x > widget.swipeThreshold) {
+        if (vx >= widget.minimumVelocity ||
+            widget.dragAlignment.x >= widget.swipeThreshold) {
           await widget.swipeRight();
-        } else if (vx < -widget.minimumVelocity ||
-            widget.dragAlignment.x < -widget.swipeThreshold) {
+        } else if (vx <= -widget.minimumVelocity ||
+            widget.dragAlignment.x <= -widget.swipeThreshold) {
           await widget.swipeLeft();
         } else {
           animateBackToDeck(details.velocity.pixelsPerSecond, screenSize);
