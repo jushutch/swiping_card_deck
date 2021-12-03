@@ -57,6 +57,12 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
   }
 
   @override
+  void didUpdateWidget(covariant SwipingGestureDetector oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    widget.swipeController = oldWidget.swipeController;
+  }
+
+  @override
   void dispose() {
     springController.dispose();
     super.dispose();
