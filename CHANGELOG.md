@@ -1,3 +1,11 @@
+## 1.0.0
+
+- Initial release! :tada:
+- **BREAKING**: Remove screenSize parameter from swipe hooks
+- Add unit tests
+- Fix bug with swipeController late initialization
+- Add badges to README
+
 ## 0.0.3
 
 - Fix GIF issue in README
