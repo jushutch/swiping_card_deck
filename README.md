@@ -12,9 +12,9 @@ and the Flutter guide for
 -->
 
 # swiping_card_deck
-![FLutter Tests](https://img.shields.io/github/workflow/status/jushutch/swiping_card_deck/Generate%20badges/main?label=Tests&style=flat-square)
-![Test Coverage](https://img.shields.io/codecov/c/github/jushutch/swiping_card_deck/main?label=Coverage&style=flat-square)
-![Bugs](https://img.shields.io/github/issues/jushutch/swiping_card_deck/bug?label=Bug%20Issues&style=flat-square)
+[![Flutter Tests](https://img.shields.io/github/workflow/status/jushutch/swiping_card_deck/Generate%20badges/main?label=Tests&style=flat-square)](https://github.com/jushutch/swiping_card_deck/tree/main/test)
+[![Test Coverage](https://img.shields.io/codecov/c/github/jushutch/swiping_card_deck/main?label=Coverage&style=flat-square)](https://app.codecov.io/gh/jushutch/swiping_card_deck)
+[![Bugs](https://img.shields.io/github/issues/jushutch/swiping_card_deck/bug?label=Bug%20Issues&style=flat-square)](https://github.com/jushutch/swiping_card_deck/labels/bug)
 
 A widget for swiping through a deck of cards with gestures or buttons.
 
