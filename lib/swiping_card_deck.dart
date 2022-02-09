@@ -1,15 +1,19 @@
 /// The swiping_card_deck library contains the [SwipingCardDeck] widget
-/// which allows a user to swipe through a deck of [Card] widgets.
+/// which allows a user to swipe through a deck of [Card] widgets. To
+/// swipe through any [Widget], use the generic [SwipingDeck] class.
 library swiping_card_deck;
 
 import 'package:flutter/material.dart';
 import './src/swiping_gesture_detector.dart';
 
-/// A deck of [Card] widgets that can be swiped to the left or right
+/// A [SwipingDeck] of [Card] widgets
+typedef SwipingCardDeck = SwipingDeck<Card>;
+
+/// A deck of [Widget] objects that can be swiped to the left or right
 /// using a gesture or a button.
-//ignore: must_be_immutable
-class SwipingCardDeck extends StatelessWidget {
-  SwipingCardDeck(
+// ignore: must_be_immutable
+class SwipingDeck<T extends Widget> extends StatelessWidget {
+  SwipingDeck(
       {Key? key,
       required this.cardDeck,
       required this.onLeftSwipe,
@@ -24,31 +28,31 @@ class SwipingCardDeck extends StatelessWidget {
     cardDeck = cardDeck.reversed.toList();
   }
 
-  /// The list of [Card] widgets to be swiped.
-  List<Card> cardDeck;
+  /// The list of [Widget] objects to be swiped.
+  List<T> cardDeck;
 
-  /// Callback function ran when a [Card] is swiped left.
-  final Function(Card) onLeftSwipe;
+  /// Callback function ran when a [Widget] is swiped left.
+  final Function(T) onLeftSwipe;
 
-  /// Callback function ran when a [Card] is swiped right.
-  final Function(Card) onRightSwipe;
+  /// Callback function ran when a [Widget] is swiped right.
+  final Function(T) onRightSwipe;
 
-  /// Callback function when the last [Card] in the [cardDeck] is swiped.
+  /// Callback function when the last [Widget] in the [cardDeck] is swiped.
   final Function() onDeckEmpty;
 
   /// The minimum horizontal velocity required to trigger a swipe.
   final double minimumVelocity;
 
-  /// The amount each [Card] rotates as it is swiped.
+  /// The amount each [Widget] rotates as it is swiped.
   final double rotationFactor;
 
-  /// The width of all [Card] widgets in the [cardDeck].
+  /// The width of all [Widget] objects in the [cardDeck].
   final double cardWidth;
 
   /// The [Duration] of the swiping [AnimationController]
   final Duration swipeAnimationDuration;
 
-  /// The distance in pixels that a [Card] must be dragged before it is swiped.
+  /// The distance in pixels that a [Widget] must be dragged before it is swiped.
   late final double? swipeThreshold;
 
   /// The [SwipingGestureDetector] used to control swipe animations.
@@ -87,11 +91,11 @@ class SwipingCardDeck extends StatelessWidget {
     );
   }
 
-  /// Swipe the top [Card] to the left.
+  /// Swipe the top [Widget] to the left.
   ///
   /// If there is no animation already in progress, trigger the animation
-  /// to swipe the top [Card] to the left, call the function [onLeftSwipe],
-  /// and remove the [Card] from the deck. If the deck is empty, call the
+  /// to swipe the top [Widget] to the left, call the function [onLeftSwipe],
+  /// and remove the [Widget] from the deck. If the deck is empty, call the
   /// function [onDeckEmpty].
   Future<void> swipeLeft() async {
     if (animationActive || cardDeck.isEmpty) return;
@@ -101,11 +105,11 @@ class SwipingCardDeck extends StatelessWidget {
     if (cardDeck.isEmpty) onDeckEmpty();
   }
 
-  /// Swipe the top [Card] to the right.
+  /// Swipe the top [Widget] to the right.
   ///
   /// If there is no animation already in progress, trigger the animation
-  /// to swipe the top [Card] to the right, call the function [onRightSwipe],
-  /// and remove the [Card] from the deck. If the deck is empty, call the
+  /// to swipe the top [Widget] to the right, call the function [onRightSwipe],
+  /// and remove the [Widget] from the deck. If the deck is empty, call the
   /// function [onDeckEmpty].
   Future<void> swipeRight() async {
     if (animationActive || cardDeck.isEmpty) return;
