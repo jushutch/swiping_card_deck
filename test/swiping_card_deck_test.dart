@@ -24,8 +24,8 @@ void main() {
     SwipingCardDeck mockDeck = SwipingCardDeck(
       cardDeck: cardDeck,
       onDeckEmpty: () => debugPrint("Card deck empty"),
-      onLeftSwipe: (Card card) => debugPrint("Swiped left!"),
-      onRightSwipe: (Card card) => debugPrint("Swiped right!"),
+      onLeftSwipe: (dynamic card) => debugPrint("Swiped left!"),
+      onRightSwipe: (dynamic card) => debugPrint("Swiped right!"),
       cardWidth: 200,
     );
     await tester.pumpWidget(MaterialApp(home: Scaffold(body: mockDeck,),));
