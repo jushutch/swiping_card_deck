@@ -9,17 +9,18 @@ import './src/swiping_gesture_detector.dart';
 /// using a gesture or a button.
 //ignore: must_be_immutable
 class SwipingCardDeck extends StatelessWidget {
-  SwipingCardDeck({
-    Key? key,
-    required this.cardDeck,
-    required this.onLeftSwipe,
-    required this.onRightSwipe,
-    required this.onDeckEmpty,
-    required this.cardWidth,
-    this.minimumVelocity = 1000,
-    this.rotationFactor = .8 / 3.14,
-    this.swipeThreshold,
-  }) : super(key: key) {
+  SwipingCardDeck(
+      {Key? key,
+      required this.cardDeck,
+      required this.onLeftSwipe,
+      required this.onRightSwipe,
+      required this.onDeckEmpty,
+      required this.cardWidth,
+      this.minimumVelocity = 1000,
+      this.rotationFactor = .8 / 3.14,
+      this.swipeThreshold,
+      this.swipeAnimationDuration = const Duration(milliseconds: 500)})
+      : super(key: key) {
     cardDeck = cardDeck.reversed.toList();
   }
 
@@ -43,6 +44,9 @@ class SwipingCardDeck extends StatelessWidget {
 
   /// The width of all [Card] widgets in the [cardDeck].
   final double cardWidth;
+
+  /// The [Duration] of the swiping [AnimationController]
+  final Duration swipeAnimationDuration;
 
   /// The distance in pixels that a [Card] must be dragged before it is swiped.
   late final double? swipeThreshold;
@@ -68,6 +72,7 @@ class SwipingCardDeck extends StatelessWidget {
       cardWidth: cardWidth,
       rotationFactor: rotationFactor,
       minimumVelocity: minimumVelocity,
+      swipeAnimationDuration: swipeAnimationDuration,
     );
     return SizedBox(
       child: Column(
