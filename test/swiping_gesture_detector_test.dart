@@ -17,7 +17,6 @@ void main() {
     }
     return cardDeck;
   }
-
   Future<void> _mountWidget(WidgetTester tester) async {
     final List<Card> cardDeck = getMockCards();
     SwipingGestureDetector mockDetector = SwipingGestureDetector(

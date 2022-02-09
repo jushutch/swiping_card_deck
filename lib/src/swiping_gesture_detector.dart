@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
 //ignore: must_be_immutable
-class SwipingGestureDetector extends StatefulWidget {
+class SwipingGestureDetector<T> extends StatefulWidget {
   SwipingGestureDetector({
     Key? key,
     required this.cardDeck,
@@ -16,7 +16,7 @@ class SwipingGestureDetector extends StatefulWidget {
     required this.swipeThreshold,
   }) : super(key: key);
 
-  final List<Card> cardDeck;
+  final List<T> cardDeck;
   final Function() swipeLeft, swipeRight;
   final double minimumVelocity;
   final double rotationFactor;
