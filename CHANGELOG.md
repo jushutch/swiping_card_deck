@@ -1,3 +1,7 @@
+## 1.1.0
+
+- Expose the duration of the swiping animation.
+
 ## 1.0.0
 
 - Initial release! :tada:
