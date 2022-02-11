@@ -20,8 +20,10 @@ class ExamplePage extends StatelessWidget {
     final SwipingCardDeck deck = SwipingCardDeck(
       cardDeck: getCardDeck(),
       onDeckEmpty: () => debugPrint("Card deck empty"),
-      onLeftSwipe: (Card card) => debugPrint("Swiped left!"),
-      onRightSwipe: (Card card) => debugPrint("Swiped right!"),
+      onLeftSwipe: (Card card, List<Card> cardDeck, int cardsSwiped) =>
+          debugPrint("Swiped left!"),
+      onRightSwipe: (Card card, List<Card> cardDeck, int cardsSwiped) =>
+          debugPrint("Swiped right!"),
       cardWidth: 200,
       swipeThreshold: MediaQuery.of(context).size.width / 3,
       minimumVelocity: 1000,

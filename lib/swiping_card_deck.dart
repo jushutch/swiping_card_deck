@@ -32,10 +32,10 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   List<T> cardDeck;
 
   /// Callback function ran when a [Widget] is swiped left.
-  final Function(T) onLeftSwipe;
+  final Function(T, List<T>, int) onLeftSwipe;
 
   /// Callback function ran when a [Widget] is swiped right.
-  final Function(T) onRightSwipe;
+  final Function(T, List<T>, int) onRightSwipe;
 
   /// Callback function when the last [Widget] in the [cardDeck] is swiped.
   final Function() onDeckEmpty;
@@ -62,6 +62,7 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   late final Size screenSize;
 
   bool animationActive = false;
+  int cardsSwiped = 0;
   static const String left = "left";
   static const String right = "right";
 
@@ -100,7 +101,8 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   Future<void> swipeLeft() async {
     if (animationActive || cardDeck.isEmpty) return;
     await _swipeCard(left, screenSize);
-    onLeftSwipe(cardDeck.last);
+    onLeftSwipe(cardDeck.last, cardDeck, cardsSwiped);
+    ++cardsSwiped;
     cardDeck.removeLast();
     if (cardDeck.isEmpty) onDeckEmpty();
   }
@@ -114,7 +116,8 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   Future<void> swipeRight() async {
     if (animationActive || cardDeck.isEmpty) return;
     await _swipeCard(right, screenSize);
-    onRightSwipe(cardDeck.last);
+    onRightSwipe(cardDeck.last, cardDeck, cardsSwiped);
+    ++cardsSwiped;
     cardDeck.removeLast();
     if (cardDeck.isEmpty) onDeckEmpty();
   }
@@ -135,5 +138,6 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
     await swipeDetector.swipeController.forward();
     swipeDetector.swipeController.reset();
     animationActive = false;
+    ++cardsSwiped;
   }
 }
