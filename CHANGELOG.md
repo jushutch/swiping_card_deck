@@ -1,6 +1,10 @@
+## 1.2.0
+
+- Create generic SwipingDeck for swiping through other widgets
+
 ## 1.1.0
 
-- Expose the duration of the swiping animation.
+- Expose the duration of the swiping animation
 
 ## 1.0.0
 
