@@ -43,16 +43,17 @@ decks with no decrease in user experience.
 designed for any need.
 - Great for any Tinder-like decision making application.
 
-The current limitations of the package:
+To create a deck of any widget, use the generic SwipingDeck class with templating!
 
-- Only accepts a list of Card widgets.
-- Only supports horizontal swiping, not vertical.
+What this package doesn't support:
+
+- Vertical swiping
 
 ## Usage
 
 Constructing a SwipingCardDeck with two cards and two buttons that can be used
 for swiping. Callback functions print out debugging information. The parameters
-minimumVelocity, rotationFactor, and swipeThreshold are all optional, but are set
+minimumVelocity, rotationFactor, swipeThreshold, and swipeAnimationDuration are all optional, but are set
 to the default values which work well for most use cases.
 
 ```dart
@@ -73,7 +74,8 @@ SwipingCardDeck(
     swipeThreshold: MediaQuery.of(context).size.width / 4,
     minimumVelocity: 1000,
     cardWidth: 200,
-    rotationFactor: 0.8 / 3.14;
+    rotationFactor: 0.8 / 3.14,
+    swipeAnimationDuration: const Duration(milliseconds: 500),
 );
 ```
 
