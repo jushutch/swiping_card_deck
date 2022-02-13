@@ -1,3 +1,7 @@
+## 2.0.0-dev.0
+
+- Add cardDeck and cardsSwiped parameters to onSwipe callback functions
+
 ## 1.2.0
 
 - Create generic SwipingDeck for swiping through other widgets
