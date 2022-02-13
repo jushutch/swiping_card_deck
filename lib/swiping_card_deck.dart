@@ -101,8 +101,7 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   Future<void> swipeLeft() async {
     if (animationActive || cardDeck.isEmpty) return;
     await _swipeCard(left, screenSize);
-    onLeftSwipe(cardDeck.last, cardDeck, cardsSwiped);
-    ++cardsSwiped;
+    onLeftSwipe(cardDeck.last, cardDeck, ++cardsSwiped);
     cardDeck.removeLast();
     if (cardDeck.isEmpty) onDeckEmpty();
   }
@@ -116,8 +115,7 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   Future<void> swipeRight() async {
     if (animationActive || cardDeck.isEmpty) return;
     await _swipeCard(right, screenSize);
-    onRightSwipe(cardDeck.last, cardDeck, cardsSwiped);
-    ++cardsSwiped;
+    onRightSwipe(cardDeck.last, cardDeck, ++cardsSwiped);
     cardDeck.removeLast();
     if (cardDeck.isEmpty) onDeckEmpty();
   }
@@ -138,6 +136,5 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
     await swipeDetector.swipeController.forward();
     swipeDetector.swipeController.reset();
     animationActive = false;
-    ++cardsSwiped;
   }
 }
