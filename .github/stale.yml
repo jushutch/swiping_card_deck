@@ -1,0 +1,23 @@
+# Number of days of inactivity before an issue becomes stale
+daysUntilStale: 14
+
+# Number of days of inactivity before a stale issue is closed
+daysUntilClose: 7
+
+# Only issues or pull requests with all of these labels are check if stale. Defaults to `[]` (disabled)
+onlyLabels:
+  - awaiting response
+
+# Label to use when marking an issue as stale
+staleLabel: stale
+
+# Comment to post when marking an issue as stale. Set to `false` to disable
+markComment: >
+  This issue has been automatically marked as stale because there has not been a response in 14 days. It will be closed if no further activity occurs in the next 7 days. If the previous discussion resolved your issue, please close the issue. Thank you again for contributing! :smile:
+
+# Comment to post when closing a stale issue. Set to `false` to disable
+closeComment: >
+  This issue has been awaiting a response for 21 days and will now be automatically closed. If this is an error, leave a comment explaining why this is an error. Thank you for your patience and understanding! :raised_hands:
+
+# Limit to only `issues` or `pulls`
+only: issues
