@@ -15,15 +15,16 @@ typedef SwipingCardDeck = SwipingDeck<Card>;
 class SwipingDeck<T extends Widget> extends StatelessWidget {
   SwipingDeck(
       {Key? key,
-      required this.cardDeck,
-      required this.onLeftSwipe,
-      required this.onRightSwipe,
-      required this.onDeckEmpty,
-      required this.cardWidth,
-      this.minimumVelocity = 1000,
-      this.rotationFactor = .8 / 3.14,
-      this.swipeThreshold,
-      this.swipeAnimationDuration = const Duration(milliseconds: 500)})
+        required this.cardDeck,
+        required this.onLeftSwipe,
+        required this.onRightSwipe,
+        required this.onDeckEmpty,
+        required this.cardWidth,
+        this.minimumVelocity = 1000,
+        this.rotationFactor = .8 / 3.14,
+        this.onMovement,
+        this.swipeThreshold,
+        this.swipeAnimationDuration = const Duration(milliseconds: 500)})
       : super(key: key) {
     cardDeck = cardDeck.reversed.toList();
   }
@@ -32,10 +33,10 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   List<T> cardDeck;
 
   /// Callback function ran when a [Widget] is swiped left.
-  final Function(T, List<T>, int) onLeftSwipe;
+  final Function(T) onLeftSwipe;
 
   /// Callback function ran when a [Widget] is swiped right.
-  final Function(T, List<T>, int) onRightSwipe;
+  final Function(T) onRightSwipe;
 
   /// Callback function when the last [Widget] in the [cardDeck] is swiped.
   final Function() onDeckEmpty;
@@ -58,11 +59,13 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   /// The [SwipingGestureDetector] used to control swipe animations.
   late final SwipingGestureDetector swipeDetector;
 
+  /// The listener [Function] function for swipe movement and direction.
+  late final Function? onMovement;
+
   /// The [Size] of the screen.
   late final Size screenSize;
 
   bool animationActive = false;
-  int cardsSwiped = 0;
   static const String left = "left";
   static const String right = "right";
 
@@ -73,6 +76,7 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
       cardDeck: cardDeck,
       swipeLeft: swipeLeft,
       swipeRight: swipeRight,
+      onMovement: onMovement,
       swipeThreshold: swipeThreshold ?? screenSize.width / 4,
       cardWidth: cardWidth,
       rotationFactor: rotationFactor,
@@ -101,7 +105,7 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   Future<void> swipeLeft() async {
     if (animationActive || cardDeck.isEmpty) return;
     await _swipeCard(left, screenSize);
-    onLeftSwipe(cardDeck.last, cardDeck, ++cardsSwiped);
+    onLeftSwipe(cardDeck.last);
     cardDeck.removeLast();
     if (cardDeck.isEmpty) onDeckEmpty();
   }
@@ -115,7 +119,7 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   Future<void> swipeRight() async {
     if (animationActive || cardDeck.isEmpty) return;
     await _swipeCard(right, screenSize);
-    onRightSwipe(cardDeck.last, cardDeck, ++cardsSwiped);
+    onRightSwipe(cardDeck.last);
     cardDeck.removeLast();
     if (cardDeck.isEmpty) onDeckEmpty();
   }
