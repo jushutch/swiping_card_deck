@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 
+
 //ignore: must_be_immutable
 class SwipingGestureDetector<T> extends StatefulWidget {
   SwipingGestureDetector({
@@ -10,6 +11,7 @@ class SwipingGestureDetector<T> extends StatefulWidget {
     required this.swipeLeft,
     required this.swipeRight,
     required this.cardWidth,
+    this.onMovement,
     this.minimumVelocity = 1000,
     this.rotationFactor = .8 / 3.14,
     this.swipeAnimationDuration = const Duration(milliseconds: 500),
@@ -18,6 +20,7 @@ class SwipingGestureDetector<T> extends StatefulWidget {
 
   final List<T> cardDeck;
   final Function() swipeLeft, swipeRight;
+  final Function?  onMovement;
   final double minimumVelocity;
   final double rotationFactor;
   final double swipeThreshold;
@@ -38,7 +41,7 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
   bool animationActive = false;
   late final AnimationController springController;
   late Animation<Alignment> spring;
-
+  int threshold = 10;
   @override
   void initState() {
     super.initState();
@@ -73,35 +76,57 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
-    return GestureDetector(
-      onPanUpdate: (DragUpdateDetails details) {
-        setState(() {
-          widget.dragAlignment += Alignment(details.delta.dx, details.delta.dy);
-        });
-      },
-      onPanStart: (DragStartDetails details) async {
-        if (animationActive) {
-          springController.stop();
-        }
-      },
-      onPanEnd: (DragEndDetails details) async {
-        double vx = details.velocity.pixelsPerSecond.dx;
-        if (vx >= widget.minimumVelocity ||
-            widget.dragAlignment.x >= widget.swipeThreshold) {
-          await widget.swipeRight();
-        } else if (vx <= -widget.minimumVelocity ||
-            widget.dragAlignment.x <= -widget.swipeThreshold) {
-          await widget.swipeLeft();
-        } else {
-          animateBackToDeck(details.velocity.pixelsPerSecond, screenSize);
-        }
-        setState(() {
-          widget.dragAlignment = Alignment.center;
-        });
-      },
-      child: Stack(
-        alignment: Alignment.center,
-        children: topTwoCards(),
+    return SafeArea(
+      child: GestureDetector(
+        onPanUpdate: (DragUpdateDetails details) {
+          // Identify the movement of the swipe and update the listener accordingly.
+          late SwipeDirection direction;
+          double x = widget.dragAlignment.x;
+          if(x.isNegative){
+            if(-widget.swipeThreshold > x){
+              direction = SwipeDirection.left;
+            }else{
+              direction = SwipeDirection.none;
+            }
+          }else{
+            if(widget.swipeThreshold < x){
+              direction = SwipeDirection.right;
+            }else{
+              direction = SwipeDirection.none;
+            }
+          }
+
+          widget.onMovement!(direction);
+
+          var left =
+          setState(() {
+            widget.dragAlignment += Alignment(details.delta.dx, details.delta.dy);
+          });
+        },
+        onPanStart: (DragStartDetails details) async {
+          if (animationActive) {
+            springController.stop();
+          }
+        },
+        onPanEnd: (DragEndDetails details) async {
+          double vx = details.velocity.pixelsPerSecond.dx;
+          if (vx >= widget.minimumVelocity ||
+              widget.dragAlignment.x >= widget.swipeThreshold) {
+            await widget.swipeRight();
+          } else if (vx <= -widget.minimumVelocity ||
+              widget.dragAlignment.x <= -widget.swipeThreshold) {
+            await widget.swipeLeft();
+          } else {
+            animateBackToDeck(details.velocity.pixelsPerSecond, screenSize);
+          }
+          setState(() {
+            widget.dragAlignment = Alignment.center;
+          });
+        },
+        child: Stack(
+          alignment: Alignment.center,
+          children: topTwoCards(),
+        ),
       ),
     );
   }
@@ -112,7 +137,7 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
         const SizedBox(
           height: 0,
           width: 0,
-        )
+        ),
       ];
     }
     List<Widget> cardDeck = [];
@@ -169,4 +194,9 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
     await springController.animateWith(simulation);
     animationActive = false;
   }
+}
+
+
+enum SwipeDirection{
+  none, left, right;
 }
