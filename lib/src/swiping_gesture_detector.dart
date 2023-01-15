@@ -14,6 +14,7 @@ class SwipingGestureDetector<T> extends StatefulWidget {
     this.rotationFactor = .8 / 3.14,
     this.swipeAnimationDuration = const Duration(milliseconds: 500),
     required this.swipeThreshold,
+    this.disableDragging = false,
   }) : super(key: key);
 
   final List<T> cardDeck;
@@ -23,6 +24,7 @@ class SwipingGestureDetector<T> extends StatefulWidget {
   final double swipeThreshold;
   final double cardWidth;
   final Duration swipeAnimationDuration;
+  final bool disableDragging;
 
   Alignment dragAlignment = Alignment.center;
 
@@ -74,36 +76,44 @@ class _SwipingGestureDetector extends State<SwipingGestureDetector>
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     return GestureDetector(
-      onPanUpdate: (DragUpdateDetails details) {
-        setState(() {
-          widget.dragAlignment += Alignment(details.delta.dx, details.delta.dy);
-        });
-      },
-      onPanStart: (DragStartDetails details) async {
-        if (animationActive) {
-          springController.stop();
-        }
-      },
-      onPanEnd: (DragEndDetails details) async {
-        double vx = details.velocity.pixelsPerSecond.dx;
-        if (vx >= widget.minimumVelocity ||
-            widget.dragAlignment.x >= widget.swipeThreshold) {
-          await widget.swipeRight();
-        } else if (vx <= -widget.minimumVelocity ||
-            widget.dragAlignment.x <= -widget.swipeThreshold) {
-          await widget.swipeLeft();
-        } else {
-          animateBackToDeck(details.velocity.pixelsPerSecond, screenSize);
-        }
-        setState(() {
-          widget.dragAlignment = Alignment.center;
-        });
-      },
+      onPanUpdate: !widget.disableDragging ? _onPanUpdate : (_) {},
+      onPanStart: !widget.disableDragging ? _onPanStart : (_) {},
+      onPanEnd: !widget.disableDragging
+          ? (details) => _onPanEnd(details, screenSize)
+          : (_) {},
       child: Stack(
         alignment: Alignment.center,
         children: topTwoCards(),
       ),
     );
+  }
+
+  void _onPanUpdate(DragUpdateDetails details) {
+    setState(() {
+      widget.dragAlignment += Alignment(details.delta.dx, details.delta.dy);
+    });
+  }
+
+  void _onPanStart(DragStartDetails details) async {
+    if (animationActive) {
+      springController.stop();
+    }
+  }
+
+  void _onPanEnd(DragEndDetails details, Size screenSize) async {
+    double vx = details.velocity.pixelsPerSecond.dx;
+    if (vx >= widget.minimumVelocity ||
+        widget.dragAlignment.x >= widget.swipeThreshold) {
+      await widget.swipeRight();
+    } else if (vx <= -widget.minimumVelocity ||
+        widget.dragAlignment.x <= -widget.swipeThreshold) {
+      await widget.swipeLeft();
+    } else {
+      animateBackToDeck(details.velocity.pixelsPerSecond, screenSize);
+    }
+    setState(() {
+      widget.dragAlignment = Alignment.center;
+    });
   }
 
   List<Widget> topTwoCards() {
