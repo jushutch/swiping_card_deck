@@ -23,7 +23,8 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
       this.minimumVelocity = 1000,
       this.rotationFactor = .8 / 3.14,
       this.swipeThreshold,
-      this.swipeAnimationDuration = const Duration(milliseconds: 500)})
+      this.swipeAnimationDuration = const Duration(milliseconds: 500),
+      this.disableDragging = false})
       : super(key: key) {
     cardDeck = cardDeck.reversed.toList();
   }
@@ -49,8 +50,11 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
   /// The width of all [Widget] objects in the [cardDeck].
   final double cardWidth;
 
-  /// The [Duration] of the swiping [AnimationController]
+  /// The [Duration] of the swiping [AnimationController].
   final Duration swipeAnimationDuration;
+
+  /// Disable swiping cards using the dragging gesture.
+  final bool disableDragging;
 
   /// The distance in pixels that a [Widget] must be dragged before it is swiped.
   late final double? swipeThreshold;
@@ -77,6 +81,7 @@ class SwipingDeck<T extends Widget> extends StatelessWidget {
       rotationFactor: rotationFactor,
       minimumVelocity: minimumVelocity,
       swipeAnimationDuration: swipeAnimationDuration,
+      disableDragging: disableDragging,
     );
     return SizedBox(
       child: Column(
