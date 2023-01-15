@@ -55,7 +55,8 @@ What this package doesn't support:
 Constructing a SwipingCardDeck with two cards and two buttons that can be used
 for swiping. Callback functions print out debugging information. The parameters
 minimumVelocity, rotationFactor, swipeThreshold, and swipeAnimationDuration are all optional, but are set
-to the default values which work well for most use cases.
+to the default values which work well for most use cases. The disableDragging parameter is set to false by
+default, but can be set to true in order to prevent cards from being swiped using the dragging gesture.
 
 ```dart
 SwipingCardDeck(

@@ -1,3 +1,7 @@
+## 1.3.0
+
+- Add option to disable swiping by dragging
+
 ## 1.2.0
 
 - Create generic SwipingDeck for swiping through other widgets
