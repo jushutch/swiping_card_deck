@@ -12,11 +12,13 @@ void main() {
         Card(
           color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
               .withOpacity(1.0),
-          child: const SizedBox(height: 300, width: 200)),
+          child: const SizedBox(height: 300, width: 200),
+        ),
       );
     }
     return cardDeck;
   }
+
   Future<void> _mountWidget(WidgetTester tester) async {
     final List<Card> cardDeck = getMockCards();
     SwipingGestureDetector mockDetector = SwipingGestureDetector(
@@ -24,53 +26,80 @@ void main() {
       swipeLeft: () {
         debugPrint("Swiped left!");
         cardDeck.removeLast();
-      }, 
+      },
       swipeRight: () {
         debugPrint("Swiped right!");
         cardDeck.removeLast();
-      }, 
+      },
       cardWidth: 200,
       swipeThreshold: 200,
       minimumVelocity: 1000,
       rotationFactor: 0,
     );
-    await tester.pumpWidget(MaterialApp(home: Scaffold(body: mockDetector,),));
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: mockDetector,
+      ),
+    ));
   }
 
-  testWidgets("SwipingCardDeck widget is created", (WidgetTester tester) async {
+  Future<void> _mountDisabledWidget(WidgetTester tester) async {
+    final List<Card> cardDeck = getMockCards();
+    SwipingGestureDetector mockDetector = SwipingGestureDetector(
+      cardDeck: cardDeck,
+      swipeLeft: () {
+        debugPrint("Swiped left!");
+        cardDeck.removeLast();
+      },
+      swipeRight: () {
+        debugPrint("Swiped right!");
+        cardDeck.removeLast();
+      },
+      cardWidth: 200,
+      swipeThreshold: 200,
+      minimumVelocity: 1000,
+      rotationFactor: 0,
+      disableDragging: true,
+    );
+    await tester.pumpWidget(MaterialApp(
+      home: Scaffold(
+        body: mockDetector,
+      ),
+    ));
+  }
+
+  testWidgets("SwipingGestureDetector widget is created",
+      (WidgetTester tester) async {
     await _mountWidget(tester);
     Finder gestureFinder = find.byType(SwipingGestureDetector);
     expect(gestureFinder, findsOneWidget);
   });
 
-  testWidgets("Card is swiped at correct thresholds", (WidgetTester tester) async {
+  testWidgets("Card is swiped at correct thresholds",
+      (WidgetTester tester) async {
     await _mountWidget(tester);
     Finder gestureFinder = find.byType(SwipingGestureDetector);
     expect(gestureFinder, findsOneWidget);
     SwipingGestureDetector detector = tester.widget(gestureFinder);
-    
+
     // Test the right swipe threshold
     await expectLater(
-      () async => await tester.drag(gestureFinder, const Offset(200, 0)), 
-      prints("Swiped right!\n")
-    );
+        () async => await tester.drag(gestureFinder, const Offset(200, 0)),
+        prints("Swiped right!\n"));
     expect(detector.cardDeck.length, numCards - 1);
     await expectLater(
-      () async => await tester.drag(gestureFinder, const Offset(199, 0)), 
-      prints("")
-    );
+        () async => await tester.drag(gestureFinder, const Offset(199, 0)),
+        prints(""));
     expect(detector.cardDeck.length, numCards - 1);
 
     // Test the left swipe threshold
     await expectLater(
-      () async => await tester.drag(gestureFinder, const Offset(-200, 0)), 
-      prints("Swiped left!\n")
-    );
+        () async => await tester.drag(gestureFinder, const Offset(-200, 0)),
+        prints("Swiped left!\n"));
     expect(detector.cardDeck.length, numCards - 2);
     await expectLater(
-      () async => await tester.drag(gestureFinder, const Offset(-199, 0)), 
-      prints("")
-    );
+        () async => await tester.drag(gestureFinder, const Offset(-199, 0)),
+        prints(""));
     expect(detector.cardDeck.length, numCards - 2);
   });
 
@@ -92,7 +121,8 @@ void main() {
     await tester.pumpAndSettle();
 
     Offset newCenter = tester.getCenter(topCardFinder);
-    newCenter = Offset(newCenter.dx.round().toDouble(), newCenter.dy.round().toDouble());
+    newCenter = Offset(
+        newCenter.dx.round().toDouble(), newCenter.dy.round().toDouble());
     expect(newCenter, initial + const Offset(30, 0));
 
     // Assert that the top card is animated after the drag is released
@@ -104,42 +134,80 @@ void main() {
     // Assert that the top card returns to the initial position
     await tester.pumpAndSettle();
     newCenter = tester.getCenter(topCardFinder);
-    newCenter = Offset(newCenter.dx.round().toDouble(), newCenter.dy.round().toDouble());
+    newCenter = Offset(
+        newCenter.dx.round().toDouble(), newCenter.dy.round().toDouble());
     expect(newCenter, initial);
   });
 
-  testWidgets("Card is swiped at minimum velocity", (WidgetTester tester) async {
+  testWidgets("Card is swiped at minimum velocity",
+      (WidgetTester tester) async {
     // NOTE: The fling velocity values are slightly generous due to the
     // imprecision of the drag details velocity.
     await _mountWidget(tester);
     Finder gestureFinder = find.byType(SwipingGestureDetector);
     expect(gestureFinder, findsOneWidget);
     SwipingGestureDetector detector = tester.widget(gestureFinder);
-    
+
     // Test the right swipe velocity
     await expectLater(
-      () async => await tester.fling(gestureFinder, const Offset(199, 0), 1001), 
-      prints("Swiped right!\n")
-    );
-    //await tester.flingFrom(tester.getCenter(gestureFinder), const Offset(199, 0), 1000);
+        () async =>
+            await tester.fling(gestureFinder, const Offset(199, 0), 1001),
+        prints("Swiped right!\n"));
     expect(detector.cardDeck.length, numCards - 1);
     await expectLater(
-      () async => await tester.fling(gestureFinder, const Offset(199, 0), 999), 
-      prints("")
-    );
+        () async =>
+            await tester.fling(gestureFinder, const Offset(199, 0), 999),
+        prints(""));
     expect(detector.cardDeck.length, numCards - 1);
     await tester.pumpAndSettle();
 
     // Test the left swipe velocity
     await expectLater(
-      () async => await tester.fling(gestureFinder, const Offset(-199, 0), 1001), 
-      prints("Swiped left!\n")
-    );
+        () async =>
+            await tester.fling(gestureFinder, const Offset(-199, 0), 1001),
+        prints("Swiped left!\n"));
     expect(detector.cardDeck.length, numCards - 2);
     await expectLater(
-      () async => await tester.fling(gestureFinder, const Offset(-199, 0), 999), 
-      prints("")
-    );
+        () async =>
+            await tester.fling(gestureFinder, const Offset(-199, 0), 999),
+        prints(""));
     expect(detector.cardDeck.length, numCards - 2);
+  });
+
+  testWidgets("Card cannot be swiped when dragging is disabled",
+      (WidgetTester tester) async {
+    // NOTE: The fling velocity values are slightly generous due to the
+    // imprecision of the drag details velocity.
+    await _mountDisabledWidget(tester);
+    Finder gestureFinder = find.byType(SwipingGestureDetector);
+    expect(gestureFinder, findsOneWidget);
+    SwipingGestureDetector detector = tester.widget(gestureFinder);
+
+    // Test flinging to the right
+    await expectLater(
+        () async =>
+            await tester.fling(gestureFinder, const Offset(199, 0), 1001),
+        prints(""));
+    expect(detector.cardDeck.length, numCards);
+    await tester.pumpAndSettle();
+
+    // Test flinging to the left
+    await expectLater(
+        () async =>
+            await tester.fling(gestureFinder, const Offset(-199, 0), 1001),
+        prints(""));
+    expect(detector.cardDeck.length, numCards);
+
+    // Test the right swipe threshold
+    await expectLater(
+        () async => await tester.drag(gestureFinder, const Offset(200, 0)),
+        prints(""));
+    expect(detector.cardDeck.length, numCards);
+
+    // Test the left swipe threshold
+    await expectLater(
+        () async => await tester.drag(gestureFinder, const Offset(-200, 0)),
+        prints(""));
+    expect(detector.cardDeck.length, numCards);
   });
 }
