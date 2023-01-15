@@ -1,18 +1,19 @@
-<!-- 
+<!--
 This README describes the package. If you publish this package to pub.dev,
 this README's contents appear on the landing page for your package.
 
 For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
 
 For general information about developing packages, see the Dart guide for
 [creating packages](https://dart.dev/guides/libraries/create-library-packages)
 and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
+[developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
 # swiping_card_deck
-[![Flutter Tests](https://img.shields.io/github/workflow/status/jushutch/swiping_card_deck/Generate%20badges/main?label=Tests&style=flat-square)](https://github.com/jushutch/swiping_card_deck/tree/main/test)
+
+[![Flutter Tests](https://img.shields.io/github/actions/workflow/status/jushutch/swiping_card_deck/badges.yml?branch=main&label=Tests&style=flat-square)](https://github.com/jushutch/swiping_card_deck/tree/main/test)
 [![Test Coverage](https://img.shields.io/codecov/c/github/jushutch/swiping_card_deck/main?label=Coverage&style=flat-square)](https://app.codecov.io/gh/jushutch/swiping_card_deck)
 [![Bugs](https://img.shields.io/github/issues/jushutch/swiping_card_deck/bug?label=Bug%20Issues&style=flat-square)](https://github.com/jushutch/swiping_card_deck/labels/bug)
 
@@ -21,7 +22,7 @@ A widget for swiping through a deck of cards with gestures or buttons.
 This package was inspired when I was trying to develop a Tinder-like app
 that involved swiping options to the left or right. I assumed that a package
 existed for such a popular functionality, but I searched the internet and could
-only find bits and pieces of different implementations that were confusing, 
+only find bits and pieces of different implementations that were confusing,
 complicated, and down right bad. This package aims to be an easy-to-use and
 customizable way to implement that functionality, and will hopefully save you
 a great amount of time!
@@ -33,14 +34,14 @@ a great amount of time!
 The SwipingCardDeck widget offers a variety of unique features:
 
 - Swipe through cards by dragging or using buttons to hook into the public
-swipeLeft and swipeRight functions.
-- Provide custom callback functions for when the deck is empty and for each 
-swiping direction, which also pass in the original Card object.
+  swipeLeft and swipeRight functions.
+- Provide custom callback functions for when the deck is empty and for each
+  swiping direction, which also pass in the original Card object.
 - Use custom Cards of any shape, size, or content.
 - Optimized performance by rendering top two cards at a time, allowing for large
-decks with no decrease in user experience.
+  decks with no decrease in user experience.
 - A variety of exposed properties allow for a swiping experience that can be
-designed for any need.
+  designed for any need.
 - Great for any Tinder-like decision making application.
 
 To create a deck of any widget, use the generic SwipingDeck class with templating!
@@ -80,14 +81,16 @@ SwipingCardDeck(
 ```
 
 ## Additional information
+
 ### Issues and suggestions
+
 This package is being actively maintained and developed. To submit ideas,
 issues, or suggestions, create an issue in the
-[GitHub repository](https://github.com/jushutch/swiping_card_deck). 
+[GitHub repository](https://github.com/jushutch/swiping_card_deck).
 
 ### Contributing
-Thank you for your interest in contributing! To get started, read through 
+
+Thank you for your interest in contributing! To get started, read through
 the documentation in [CONTRIBUTING](https://github.com/jushutch/swiping_card_deck/blob/main/CONTRIBUTING.md).
 There are always new issues coming so be sure to check back often, and if there's
 something you want to work on but there's no issue, just open one yourself!
-
