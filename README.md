@@ -77,6 +77,7 @@ SwipingCardDeck(
     cardWidth: 200,
     rotationFactor: 0.8 / 3.14,
     swipeAnimationDuration: const Duration(milliseconds: 500),
+    disableDragging: false,
 );
 ```
 
