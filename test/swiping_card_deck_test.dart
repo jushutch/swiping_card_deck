@@ -20,7 +20,7 @@ void main() {
 
   final cardDeck = getMockCards();
 
-  Future<void> _mountWidget(WidgetTester tester) async {
+  Future<void> mountWidget(WidgetTester tester) async {
     SwipingCardDeck mockDeck = SwipingCardDeck(
       cardDeck: cardDeck,
       onDeckEmpty: () => debugPrint("Card deck empty"),
@@ -36,20 +36,20 @@ void main() {
   }
 
   testWidgets("SwipingCardDeck widget is created", (WidgetTester tester) async {
-    await _mountWidget(tester);
+    await mountWidget(tester);
     Finder deckFinder = find.byType(SwipingCardDeck);
     expect(deckFinder, findsOneWidget);
   });
 
   testWidgets("Only two cards are rendered", (WidgetTester tester) async {
-    await _mountWidget(tester);
+    await mountWidget(tester);
     Finder cardFinder = find.byType(Card);
     expect(cardFinder, findsNWidgets(2));
   });
 
   testWidgets("swipeLeft removes top card and runs callback",
       (WidgetTester tester) async {
-    await _mountWidget(tester);
+    await mountWidget(tester);
     Finder cardFinder = find.byType(Card);
     expect(cardFinder, findsNWidgets(2));
     expect(tester.widget(cardFinder.first) as Card, cardDeck[1]);
@@ -68,7 +68,7 @@ void main() {
 
   testWidgets("swipeRight removes top card and runs callback",
       (WidgetTester tester) async {
-    await _mountWidget(tester);
+    await mountWidget(tester);
     Finder deckFinder = find.byType(SwipingCardDeck);
     expect(deckFinder, findsOneWidget);
     SwipingCardDeck deck = tester.widget(deckFinder);
@@ -86,7 +86,7 @@ void main() {
 
   testWidgets("Callback function is ran when deck is empty",
       (WidgetTester tester) async {
-    await _mountWidget(tester);
+    await mountWidget(tester);
     Finder deckFinder = find.byType(SwipingCardDeck);
     expect(deckFinder, findsOneWidget);
     SwipingCardDeck deck = tester.widget(deckFinder);

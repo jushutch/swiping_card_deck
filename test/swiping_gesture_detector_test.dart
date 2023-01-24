@@ -19,7 +19,7 @@ void main() {
     return cardDeck;
   }
 
-  Future<void> _mountWidget(WidgetTester tester) async {
+  Future<void> mountWidget(WidgetTester tester) async {
     final List<Card> cardDeck = getMockCards();
     SwipingGestureDetector mockDetector = SwipingGestureDetector(
       cardDeck: cardDeck,
@@ -43,7 +43,7 @@ void main() {
     ));
   }
 
-  Future<void> _mountDisabledWidget(WidgetTester tester) async {
+  Future<void> mountDisabledWidget(WidgetTester tester) async {
     final List<Card> cardDeck = getMockCards();
     SwipingGestureDetector mockDetector = SwipingGestureDetector(
       cardDeck: cardDeck,
@@ -70,14 +70,14 @@ void main() {
 
   testWidgets("SwipingGestureDetector widget is created",
       (WidgetTester tester) async {
-    await _mountWidget(tester);
+    await mountWidget(tester);
     Finder gestureFinder = find.byType(SwipingGestureDetector);
     expect(gestureFinder, findsOneWidget);
   });
 
   testWidgets("Card is swiped at correct thresholds",
       (WidgetTester tester) async {
-    await _mountWidget(tester);
+    await mountWidget(tester);
     Finder gestureFinder = find.byType(SwipingGestureDetector);
     expect(gestureFinder, findsOneWidget);
     SwipingGestureDetector detector = tester.widget(gestureFinder);
@@ -107,7 +107,7 @@ void main() {
     // NOTE: The Offset values for the drag gesture are rounded because
     // the dragAlignment is converted from pixels to a percentage which
     // is imprecise.
-    await _mountWidget(tester);
+    await mountWidget(tester);
     Finder gestureFinder = find.byType(SwipingGestureDetector);
     expect(gestureFinder, findsOneWidget);
     SwipingGestureDetector detector = tester.widget(gestureFinder);
@@ -143,7 +143,7 @@ void main() {
       (WidgetTester tester) async {
     // NOTE: The fling velocity values are slightly generous due to the
     // imprecision of the drag details velocity.
-    await _mountWidget(tester);
+    await mountWidget(tester);
     Finder gestureFinder = find.byType(SwipingGestureDetector);
     expect(gestureFinder, findsOneWidget);
     SwipingGestureDetector detector = tester.widget(gestureFinder);
@@ -178,7 +178,7 @@ void main() {
       (WidgetTester tester) async {
     // NOTE: The fling velocity values are slightly generous due to the
     // imprecision of the drag details velocity.
-    await _mountDisabledWidget(tester);
+    await mountDisabledWidget(tester);
     Finder gestureFinder = find.byType(SwipingGestureDetector);
     expect(gestureFinder, findsOneWidget);
     SwipingGestureDetector detector = tester.widget(gestureFinder);
